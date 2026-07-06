@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Service with Frankline — Real Remote Work Advice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B2027;
+    --ink-soft:#122C34;
+    --teal:#028090;
+    --seafoam:#00A896;
+    --mint:#02C39A;
+    --off:#F4FBFA;
+    --off-dim:#DCEEEC;
+    --amber:#F2A541;
+    --line: rgba(2,128,144,0.18);
+    --text-dim:#5B7371;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--off);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Space Grotesk',sans-serif;
+    letter-spacing:-0.01em;
+  }
+  .mono{
+    font-family:'IBM Plex Mono',monospace;
+    letter-spacing:0.02em;
+  }
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  .wrap{
+    max-width:920px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+  ::selection{ background:var(--mint); color:var(--ink); }
+  :focus-visible{ outline:3px solid var(--amber); outline-offset:3px; border-radius:4px; }
+
+  /* ---------- HERO / CHAT WINDOW ---------- */
+  .hero-section{
+    background:var(--ink);
+    padding:56px 0 88px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-section::before{
+    content:"";
+    position:absolute;
+    top:-140px; right:-120px;
+    width:420px; height:420px;
+    border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, var(--teal), transparent 70%);
+    opacity:0.5;
+  }
+  .chat-window{
+    position:relative;
+    background:var(--ink-soft);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:16px;
+    box-shadow:0 30px 80px -30px rgba(0,0,0,0.6);
+    overflow:hidden;
+  }
+  .chat-titlebar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 20px;
+    background:rgba(255,255,255,0.03);
+    border-bottom:1px solid rgba(255,255,255,0.07);
+  }
+  .chat-dots{ display:flex; gap:7px; }
+  .chat-dots span{
+    width:10px; height:10px; border-radius:50%;
+    background:rgba(255,255,255,0.15);
+  }
+  .chat-titlebar .label{
+    font-size:12.5px; color:rgba(255,255,255,0.45);
+  }
+  .status-pill{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:12px; color:var(--mint);
+    background:rgba(2,195,154,0.12);
+    padding:4px 10px; border-radius:999px;
+    border:1px solid rgba(2,195,154,0.3);
+  }
+  .status-pill .dot{
+    width:6px; height:6px; border-radius:50%;
+    background:var(--mint);
+    box-shadow:0 0 0 0 rgba(2,195,154,0.6);
+    animation:pulse 2s infinite;
+  }
+  @keyframes pulse{
+    0%{ box-shadow:0 0 0 0 rgba(2,195,154,0.55); }
+    70%{ box-shadow:0 0 0 8px rgba(2,195,154,0); }
+    100%{ box-shadow:0 0 0 0 rgba(2,195,154,0); }
+  }
+  .chat-body{ padding:44px 40px 40px; }
+  .ticket-tag{
+    display:inline-block;
+    font-size:12px;
+    color:var(--seafoam);
+    border:1px solid rgba(0,168,150,0.4);
+    padding:3px 10px;
+    border-radius:6px;
+    margin-bottom:22px;
+  }
+  .hero-body h1{
+    color:var(--off);
+    font-size:clamp(30px, 4.4vw, 46px);
+    font-weight:700;
+    line-height:1.12;
+    max-width:14ch;
+  }
+  .hero-body h1 em{
+    font-style:normal;
+    color:var(--mint);
+  }
+  .hero-sub{
+    margin-top:20px;
+    color:rgba(244,251,250,0.72);
+    font-size:16.5px;
+    max-width:46ch;
+  }
+  .typing{
+    margin-top:26px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:rgba(244,251,250,0.4);
+    font-size:13px;
+  }
+  .typing-dots{ display:flex; gap:4px; }
+  .typing-dots span{
+    width:5px; height:5px; border-radius:50%;
+    background:rgba(244,251,250,0.5);
+    animation:bounce 1.3s infinite ease-in-out;
+  }
+  .typing-dots span:nth-child(2){ animation-delay:0.15s; }
+  .typing-dots span:nth-child(3){ animation-delay:0.3s; }
+  @keyframes bounce{
+    0%,60%,100%{ transform:translateY(0); opacity:0.4; }
+    30%{ transform:translateY(-3px); opacity:1; }
+  }
+  .cta-row{
+    margin-top:34px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:14.5px;
+    padding:13px 22px;
+    border-radius:9px;
+    border:1px solid transparent;
+    cursor:pointer;
+    transition:transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn-primary{
+    background:var(--mint);
+    color:var(--ink);
+    box-shadow:0 10px 28px -10px rgba(2,195,154,0.6);
+  }
+  .btn-primary:hover{ box-shadow:0 14px 34px -10px rgba(2,195,154,0.75); }
+  .btn-ghost{
+    background:transparent;
+    color:var(--off);
+    border-color:rgba(244,251,250,0.28);
+  }
+  .btn-ghost:hover{ border-color:rgba(244,251,250,0.55); }
+
+  /* ---------- SECTION LABELS ---------- */
+  .section{ padding:78px 0; }
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin-bottom:36px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:16px;
+  }
+  .section-head .ticket-id{
+    font-size:12.5px;
+    color:var(--teal);
+    white-space:nowrap;
+  }
+  .section-head h2{
+    font-size:clamp(22px,3vw,28px);
+    font-weight:600;
+  }
+  .section-head .status{
+    margin-left:auto;
+    font-size:11.5px;
+    padding:4px 10px;
+    border-radius:6px;
+    white-space:nowrap;
+  }
+  .status-open{ background:rgba(2,128,144,0.1); color:var(--teal); border:1px solid rgba(2,128,144,0.3); }
+  .status-resolved{ background:rgba(2,195,154,0.1); color:#01865F; border:1px solid rgba(2,195,154,0.35); }
+
+  /* ---------- AGENT PROFILE ---------- */
+  .agent-card{
+    display:flex;
+    gap:26px;
+    align-items:flex-start;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:30px;
+  }
+  .avatar{
+    flex:none;
+    width:78px; height:78px;
+    border-radius:14px;
+    background:linear-gradient(145deg, var(--teal), var(--seafoam));
+    color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:26px;
+  }
+  .agent-name{ font-size:20px; font-weight:600; }
+  .agent-role{ color:var(--text-dim); font-size:14.5px; margin-top:3px; }
+  .tag-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+  .tag{
+    font-size:12.5px;
+    padding:5px 11px;
+    border-radius:999px;
+    background:var(--off-dim);
+    color:var(--ink);
+    border:1px solid var(--line);
+  }
+  .agent-quote{
+    margin-top:18px;
+    font-size:15px;
+    color:var(--ink);
+    border-left:3px solid var(--mint);
+    padding-left:14px;
+    font-style:italic;
+    color:#33474A;
+  }
+
+  /* ---------- CHECKLIST TICKET ---------- */
+  .checklist-card{
+    background:var(--ink);
+    border-radius:14px;
+    padding:34px 34px 30px;
+    color:var(--off);
+  }
+  .checklist-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:22px;
+  }
+  .checklist-head h3{ font-size:19px; font-weight:600; }
+  .checklist-head span{ font-size:12px; color:var(--mint); }
+  .check-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px 28px;
+  }
+  .check-item{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    font-size:14.5px;
+    color:rgba(244,251,250,0.85);
+  }
+  .check-box{
+    flex:none;
+    width:18px; height:18px;
+    border-radius:5px;
+    background:var(--mint);
+    color:var(--ink);
+    display:flex; align-items:center; justify-content:center;
+    font-size:12px;
+    margin-top:1px;
+  }
+  .checklist-footer{
+    margin-top:26px;
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:16px;
+    padding-top:22px;
+    border-top:1px solid rgba(255,255,255,0.1);
+  }
+  .checklist-footer p{ font-size:13.5px; color:rgba(244,251,250,0.55); flex:1; min-width:220px; }
+
+  /* ---------- MESSAGES / PROOF ---------- */
+  .msg-list{ display:flex; flex-direction:column; gap:14px; }
+  .msg-bubble{
+    max-width:78%;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:14px 14px 14px 4px;
+    padding:16px 18px;
+    font-size:14.5px;
+  }
+  .msg-meta{
+    font-size:11.5px;
+    color:var(--text-dim);
+    margin-bottom:6px;
+  }
+  .msg-reply{
+    align-self:flex-end;
+    background:var(--teal);
+    color:#fff;
+    border-radius:14px 14px 4px 14px;
+    border:none;
+  }
+  .msg-reply .msg-meta{ color:rgba(255,255,255,0.7); }
+
+  /* ---------- QUICK LINKS ---------- */
+  .link-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:16px;
+  }
+  .link-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:20px;
+    transition:border-color 0.15s ease, transform 0.15s ease;
+  }
+  .link-card:hover{ border-color:var(--teal); transform:translateY(-2px); }
+  .link-card .k{
+    font-size:11px;
+    color:var(--teal);
+    margin-bottom:8px;
+  }
+  .link-card .v{ font-size:15.5px; font-weight:600; }
+  .link-card .d{ font-size:13px; color:var(--text-dim); margin-top:4px; }
+
+  /* ---------- CLOSING CTA ---------- */
+  .closing{
+    background:var(--ink);
+    padding:76px 0;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .closing::before{
+    content:"";
+    position:absolute;
+    bottom:-160px; left:50%;
+    transform:translateX(-50%);
+    width:520px; height:520px;
+    border-radius:50%;
+    background:radial-gradient(circle, var(--teal), transparent 70%);
+    opacity:0.35;
+  }
+  .closing h2{
+    position:relative;
+    color:var(--off);
+    font-size:clamp(24px,3.6vw,34px);
+    max-width:16ch;
+    margin:0 auto 14px;
+  }
+  .closing p{
+    position:relative;
+    color:rgba(244,251,250,0.65);
+    max-width:42ch;
+    margin:0 auto 30px;
+  }
+
+  footer{
+    padding:26px 0 34px;
+    text-align:center;
+    font-size:12.5px;
+    color:var(--text-dim);
+  }
+
+  /* ---------- PRICING / SERVICE TICKETS ---------- */
+  .price-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+  }
+  .price-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:28px;
+    display:flex;
+    flex-direction:column;
+  }
+  .price-card.featured{
+    background:var(--ink);
+    color:var(--off);
+    border-color:var(--ink);
+    position:relative;
+    overflow:hidden;
+  }
+  .price-card.featured::before{
+    content:"";
+    position:absolute;
+    top:-80px; right:-80px;
+    width:200px; height:200px;
+    border-radius:50%;
+    background:radial-gradient(circle, var(--mint), transparent 70%);
+    opacity:0.35;
+  }
+  .price-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:14px;
+  }
+  .price-label{ font-size:13px; }
+  .price-card:not(.featured) .price-label{ color:var(--teal); }
+  .price-card.featured .price-label{ color:var(--mint); }
+  .price-badge{
+    font-size:11px;
+    padding:3px 9px;
+    border-radius:6px;
+    background:var(--off-dim);
+    color:var(--ink);
+  }
+  .price-card.featured .price-badge{
+    background:rgba(2,195,154,0.18);
+    color:var(--mint);
+  }
+  .price-amount{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:34px;
+    font-weight:700;
+    margin-bottom:4px;
+    position:relative;
+  }
+  .price-amount span{ font-size:15px; font-weight:500; opacity:0.65; }
+  .price-desc{
+    font-size:13.5px;
+    margin-bottom:18px;
+    position:relative;
+  }
+  .price-card:not(.featured) .price-desc{ color:var(--text-dim); }
+  .price-card.featured .price-desc{ color:rgba(244,251,250,0.65); }
+  .price-list{
+    list-style:none;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom:22px;
+    flex:1;
+    position:relative;
+  }
+  .price-list li{
+    font-size:14px;
+    display:flex;
+    gap:9px;
+    align-items:flex-start;
+  }
+  .price-list li::before{
+    content:"✓";
+    flex:none;
+    width:18px; height:18px;
+    border-radius:5px;
+    background:var(--mint);
+    color:var(--ink);
+    font-size:11px;
+    display:flex; align-items:center; justify-content:center;
+    margin-top:1px;
+  }
+  .price-card:not(.featured) .price-list li::before{
+    background:var(--off-dim);
+    color:var(--teal);
+  }
+
+  /* ---------- BOOKING GRID ---------- */
+  .book-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+  }
+  .book-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:26px;
+  }
+  .book-card .k{ font-size:11px; color:var(--teal); margin-bottom:10px; }
+  .book-card h3{ font-size:18px; font-weight:600; margin-bottom:8px; }
+  .book-card p{ font-size:13.5px; color:var(--text-dim); margin-bottom:20px; }
+  .btn-block{ width:100%; justify-content:center; }
+  .btn-outline{
+    background:transparent;
+    color:var(--ink);
+    border:1.5px solid var(--teal);
+  }
+  .btn-outline:hover{ background:rgba(2,128,144,0.06); }
+  .wa-row{ display:flex; flex-direction:column; gap:10px; }
+
+  /* ---------- PAYMENT CARD ---------- */
+  .pay-card{
+    background:var(--off-dim);
+    border:1px dashed var(--teal);
+    border-radius:14px;
+    padding:26px 28px;
+  }
+  .pay-card h3{ font-size:16.5px; margin-bottom:14px; }
+  .pay-steps{
+    counter-reset:step;
+    list-style:none;
+    margin-bottom:20px;
+  }
+  .pay-steps li{
+    counter-increment:step;
+    font-size:14px;
+    padding-left:30px;
+    position:relative;
+    margin-bottom:10px;
+    color:#2E4144;
+  }
+  .pay-steps li::before{
+    content:counter(step);
+    position:absolute; left:0; top:0;
+    width:20px; height:20px;
+    border-radius:6px;
+    background:var(--teal);
+    color:#fff;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .copy-field{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:9px;
+    padding:12px 14px;
+    max-width:340px;
+  }
+  .copy-field .num{ font-family:'IBM Plex Mono',monospace; font-size:15px; flex:1; }
+  .copy-btn{
+    font-family:'Inter',sans-serif;
+    font-size:12.5px;
+    font-weight:600;
+    padding:7px 12px;
+    border-radius:6px;
+    background:var(--teal);
+    color:#fff;
+    border:none;
+    cursor:pointer;
+    transition:background 0.15s ease;
+  }
+  .copy-btn:hover{ background:var(--seafoam); }
+  .copy-btn.copied{ background:var(--mint); }
+
+  /* ---------- PAYMENT OPTIONS GRID ---------- */
+  .pay-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+  }
+  .pay-option{
+    background:var(--off-dim);
+    border:1px dashed var(--teal);
+    border-radius:14px;
+    padding:24px 26px;
+    display:flex;
+    flex-direction:column;
+  }
+  .pay-option .k{ font-size:11px; color:var(--teal); margin-bottom:8px; }
+  .pay-option h3{ font-size:16px; margin-bottom:12px; }
+  .pay-option p.note{ font-size:13px; color:var(--text-dim); margin-bottom:16px; flex:1; }
+
+  @media (max-width:640px){
+    .chat-body{ padding:32px 22px 30px; }
+    .agent-card{ flex-direction:column; }
+    .check-grid{ grid-template-columns:1fr; }
+    .msg-bubble{ max-width:92%; }
+    .price-grid, .book-grid, .pay-grid{ grid-template-columns:1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero-section">
+  <div class="wrap">
+    <div class="chat-window">
+      <div class="chat-titlebar">
+        <div class="chat-dots"><span></span><span></span><span></span></div>
+        <div class="label mono">customerservicewithfrankline.com</div>
+        <div class="status-pill"><span class="dot"></span>Frankline is online</div>
+      </div>
+      <div class="chat-body">
+        <span class="ticket-tag mono">#TICKET-001 · NEW</span>
+        <div class="hero-body">
+          <h1>Real remote work advice. <em>No hype. No scams.</em></h1>
+          <p class="hero-sub">I'm Frankline — a remote Customer Service Rep in roadside assistance. This page is where I teach people how to actually land remote work in customer service, virtual assistance, data entry, and AI training.</p>
+          <div class="typing">
+            <span class="typing-dots"><span></span><span></span><span></span></span>
+            based on real experience, not theory
+          </div>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#services">See free & paid help</a>
+            <a class="btn btn-ghost" href="https://www.facebook.com/share/1LGqqLgwAx/?mibextid=wwXIfr" target="_blank" rel="noopener">Follow the page</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== AGENT PROFILE ===================== -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="ticket-id mono">#002</span>
+      <h2>Who's handling your ticket</h2>
+      <span class="status status-resolved">Verified</span>
+    </div>
+    <div class="agent-card">
+      <div class="avatar">FM</div>
+      <div>
+        <div class="agent-name">Frankline Mevi</div>
+        <div class="agent-role">Customer Service Rep — Roadside Assistance (Remote, US)</div>
+        <div class="tag-row">
+          <span class="tag">Customer Service</span>
+          <span class="tag">Virtual Assistant</span>
+          <span class="tag">Data Entry</span>
+          <span class="tag">AI Training</span>
+        </div>
+        <p class="agent-quote">"Most people aren't struggling with remote work because they're unqualified — they're struggling because no one ever taught them how the game is actually played. That's what I'm here for."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SERVICES: FREE VS PAID ===================== -->
+<section class="section" id="services" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="ticket-id mono">#003</span>
+      <h2>Ways I can help</h2>
+      <span class="status status-open">2 options</span>
+    </div>
+    <div class="price-grid">
+      <div class="price-card">
+        <div class="price-top">
+          <span class="price-label mono">FREE</span>
+          <span class="price-badge">No cost</span>
+        </div>
+        <div class="price-amount">$0</div>
+        <div class="price-desc">Good starting point if you're new to remote work.</div>
+        <ul class="price-list">
+          <li>Free Remote CS CV Checklist</li>
+          <li>General remote-job advice via page posts</li>
+          <li>Comment or message with quick questions</li>
+        </ul>
+        <a class="btn btn-outline btn-block" href="#checklist">Get the free checklist</a>
+      </div>
+      <div class="price-card featured">
+        <div class="price-top">
+          <span class="price-label mono">1-ON-1 SESSION</span>
+          <span class="price-badge">Most requested</span>
+        </div>
+        <div class="price-amount">$5 <span>/ 30 min</span></div>
+        <div class="price-desc">Direct, personalized help to actually land the job.</div>
+        <ul class="price-list">
+          <li>Full CV review and rewrite guidance</li>
+          <li>Best sites for remote jobs, picked for your goal</li>
+          <li>Walkthrough on how to apply the right way</li>
+          <li>Real answers to your specific situation</li>
+        </ul>
+        <a class="btn btn-primary btn-block" href="#book">Book a session</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CHECKLIST TICKET ===================== -->
+<section class="section" id="checklist" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="ticket-id mono">#004</span>
+      <h2>Free resource attached</h2>
+      <span class="status status-open">Open</span>
+    </div>
+    <div class="checklist-card">
+      <div class="checklist-head">
+        <h3>Remote Customer Service CV Checklist</h3>
+        <span class="mono">9 / 9 checks</span>
+      </div>
+      <div class="check-grid">
+        <div class="check-item"><span class="check-box">✓</span>Say "remote-ready" up front</div>
+        <div class="check-item"><span class="check-box">✓</span>Use remote-specific keywords</div>
+        <div class="check-item"><span class="check-box">✓</span>List the tools you know</div>
+        <div class="check-item"><span class="check-box">✓</span>Highlight self-management</div>
+        <div class="check-item"><span class="check-box">✓</span>Show you're set up to work</div>
+        <div class="check-item"><span class="check-box">✓</span>Quantify your experience</div>
+        <div class="check-item"><span class="check-box">✓</span>Keep it short and scannable</div>
+        <div class="check-item"><span class="check-box">✓</span>Tailor every application</div>
+        <div class="check-item"><span class="check-box">✓</span>Edit AI drafts before sending</div>
+      </div>
+      <div class="checklist-footer">
+        <p>Comment "CV" on the pinned post, or message the page directly to get the full checklist.</p>
+        <a class="btn btn-primary" href="https://www.facebook.com/share/1LGqqLgwAx/?mibextid=wwXIfr" target="_blank" rel="noopener">Message Frankline</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BOOKING ===================== -->
+<section class="section" id="book" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="ticket-id mono">#005</span>
+      <h2>Request a call or send a message</h2>
+      <span class="status status-open">Reply within a day</span>
+    </div>
+    <div class="book-grid">
+      <div class="book-card">
+        <div class="k mono">SCHEDULE</div>
+        <h3>Request a call</h3>
+        <p>Book a 30-minute slot directly on my calendar — no back-and-forth needed.</p>
+        <a class="btn btn-primary btn-block" href="https://calendly.com/franklinekmer/30min" target="_blank" rel="noopener">Book on Calendly</a>
+      </div>
+      <div class="book-card">
+        <div class="k mono">MESSAGE</div>
+        <h3>Send a message</h3>
+        <p>Prefer to chat first? Reach me directly on WhatsApp.</p>
+        <div class="wa-row">
+          <a class="btn btn-outline btn-block" href="https://wa.me/16676664484" target="_blank" rel="noopener">WhatsApp (US) +1 667 666 4484</a>
+          <a class="btn btn-outline btn-block" href="https://wa.me/237675845829" target="_blank" rel="noopener">WhatsApp (CM) +237 675 845 829</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PAYMENT ===================== -->
+<section class="section" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="ticket-id mono">#006</span>
+      <h2>How to pay for a session</h2>
+      <span class="status status-resolved">2 options</span>
+    </div>
+    <p style="font-size:13.5px; color:var(--text-dim); margin-bottom:20px;">
+      Book your slot on Calendly first, then pay $5 (or the local equivalent) using whichever option works for you. Use your name as the reference so I can match your payment to your booking.
+    </p>
+    <div class="pay-grid">
+      <div class="pay-option">
+        <div class="k mono">MOBILE MONEY</div>
+        <h3>Pay locally (Cameroon)</h3>
+        <p class="note">Send directly to this number, then message me to confirm.</p>
+        <div class="copy-field">
+          <span class="num" id="momo-number">+237 675 845 829</span>
+          <button class="copy-btn" onclick="copyNumber('momo-number', this)">Copy</button>
+        </div>
+      </div>
+      <div class="pay-option">
+        <div class="k mono">PAYPAL</div>
+        <h3>Pay internationally</h3>
+        <p class="note">Use my PayPal.Me link — works from anywhere.</p>
+        <a class="btn btn-primary btn-block" href="https://www.paypal.com/paypalme/franklinemevi" target="_blank" rel="noopener">Pay on PayPal</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== INBOX / PROOF ===================== -->
+<section class="section" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="ticket-id mono">#007</span>
+      <h2>What's landing in the inbox</h2>
+      <span class="status status-open">Active</span>
+    </div>
+    <div class="msg-list">
+      <div class="msg-bubble">
+        <div class="msg-meta">Job seeker · this week</div>
+        I've been applying for months and can't land a remote role — can you help me figure out what I'm doing wrong?
+      </div>
+      <div class="msg-bubble msg-reply">
+        <div class="msg-meta">Frankline</div>
+        Happy to. What's your biggest blocker right now — finding listings, your CV, or knowing which skill to start with?
+      </div>
+      <div class="msg-bubble">
+        <div class="msg-meta">Job seeker · this week</div>
+        I want to build my CV for customer service. Could you help me with it?
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== QUICK LINKS ===================== -->
+<section class="section" id="links" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="ticket-id mono">#008</span>
+      <h2>Quick replies</h2>
+      <span class="status status-resolved">Ready</span>
+    </div>
+    <div class="link-grid">
+      <a class="link-card" href="https://www.facebook.com/share/1LGqqLgwAx/?mibextid=wwXIfr" target="_blank" rel="noopener">
+        <div class="k mono">FACEBOOK</div>
+        <div class="v">Customer Service with Frankline</div>
+        <div class="d">Daily posts, tips, and real CS stories</div>
+      </a>
+      <a class="link-card" href="https://www.linkedin.com/in/cheo-frankline-ngwa-6064bb1a3?trk=contact-info" target="_blank" rel="noopener">
+        <div class="k mono">LINKEDIN</div>
+        <div class="v">Connect with Frankline</div>
+        <div class="d">Professional background and updates</div>
+      </a>
+      <a class="link-card" href="#book">
+        <div class="k mono">BOOK / MESSAGE</div>
+        <div class="v">Request a call</div>
+        <div class="d">Calendly, WhatsApp, or a paid session</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CLOSING CTA ===================== -->
+<section class="closing">
+  <div class="wrap">
+    <h2>This ticket doesn't need closing.</h2>
+    <p>It needs you to follow, ask a question, and start the process of actually landing the job.</p>
+    <a class="btn btn-primary" href="https://www.facebook.com/share/1LGqqLgwAx/?mibextid=wwXIfr" target="_blank" rel="noopener">Follow Customer Service with Frankline</a>
+  </div>
+</section>
+
+<script>
+function copyNumber(elId, btn){
+  const number = document.getElementById(elId).textContent.trim();
+  navigator.clipboard.writeText(number).then(() => {
+    const original = btn.textContent;
+    btn.textContent = 'Copied';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = original;
+      btn.classList.remove('copied');
+    }, 1800);
+  });
+}
+</script>
+
+<footer>
+  <div class="wrap mono">customer service with frankline · real remote work advice</div>
+</footer>
+
+</body>
+</html>
